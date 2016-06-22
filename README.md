@@ -67,4 +67,4 @@ vendor\bin\phpcs --standard=PSR2 src
 
 ## License
 
-This project is under [GPL-3.0 License](LICENSE).
+This project is under [MIT License](LICENSE).
