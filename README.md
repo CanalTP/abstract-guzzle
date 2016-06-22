@@ -1,6 +1,10 @@
 Absract Guzzle
 ==============
 
+[![Build Status](https://travis-ci.org/CanalTP/abstract-guzzle.svg?branch=master)](https://travis-ci.org/CanalTP/abstract-guzzle)
+[![Latest Stable Version](https://poser.pugx.org/canaltp/abstract-guzzle/v/stable)](https://packagist.org/packages/canaltp/abstract-guzzle)
+[![License](https://poser.pugx.org/canaltp/abstract-guzzle/license)](https://packagist.org/packages/canaltp/abstract-guzzle)
+
 Allows to use multiple versions of [Guzzle](https://github.com/guzzle/guzzle) in a same project.
 
 It uses an abstract Guzzle client which handle [PSR-7](http://www.php-fig.org/psr/psr-7/) Request and Response objects,

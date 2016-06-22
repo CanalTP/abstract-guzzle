@@ -1,6 +1,6 @@
 {
     "name": "canaltp/abstract-guzzle",
-    "license": "GPL-3.0",
+    "license": "MIT",
     "type": "library",
     "description": "Allows to use multiple versions of Guzzle in a same project.",
     "homepage": "https://github.com/CanalTP/abstract-guzzle",
