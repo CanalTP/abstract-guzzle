@@ -1,5 +1,5 @@
-Absract Guzzle
-==============
+Abstract Guzzle
+===============
 
 [![Build Status](https://travis-ci.org/CanalTP/abstract-guzzle.svg?branch=master)](https://travis-ci.org/CanalTP/abstract-guzzle)
 [![Latest Stable Version](https://poser.pugx.org/canaltp/abstract-guzzle/v/stable)](https://packagist.org/packages/canaltp/abstract-guzzle)
