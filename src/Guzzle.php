@@ -10,32 +10,34 @@ abstract class Guzzle
     /**
      * @var string
      */
-    private $baseUrl;
+    private $baseUri;
 
     /**
      * @param string $baseUrl
      */
-    public function __construct($baseUrl)
+    public function __construct($config)
     {
-        $this->baseUrl = $baseUrl;
+        if (!empty($config['base_uri'])) {
+            $this->baseUri = $config['base_uri'];
+        }
     }
 
     /**
      * @return string
      */
-    public function getBaseUrl()
+    public function getBaseUri()
     {
-        return $this->baseUrl;
+        return $this->baseUri;
     }
 
     /**
-     * @param string $baseUrl
+     * @param string $baseUri
      *
      * @return self
      */
-    public function setBaseUrl($baseUrl)
+    public function setBaseUri($baseUri)
     {
-        $this->baseUrl = $baseUrl;
+        $this->baseUri = $baseUri;
 
         return $this;
     }

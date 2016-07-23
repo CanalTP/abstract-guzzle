@@ -20,7 +20,7 @@ class Guzzle5 extends Guzzle
      */
     public function __construct($baseUrl)
     {
-        parent::__construct($baseUrl);
+        parent::__construct(['base_uri' => $baseUrl]);
 
         $this->initClient();
     }
@@ -31,8 +31,7 @@ class Guzzle5 extends Guzzle
     public function initClient()
     {
         $client = new Client(array(
-            'base_url' => $this->getBaseUrl(),
-            'stream' => false,
+            'base_url' => $this->getBaseUri(),
             'http_errors' => false,
         ));
 

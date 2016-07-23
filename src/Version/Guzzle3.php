@@ -19,7 +19,7 @@ class Guzzle3 extends Guzzle
      */
     public function __construct($baseUrl)
     {
-        parent::__construct($baseUrl);
+        parent::__construct(['base_uri' => $baseUrl]);
 
         $this->initClient();
     }
@@ -29,7 +29,7 @@ class Guzzle3 extends Guzzle
      */
     public function initClient()
     {
-        $this->setClient(new Client($this->getBaseUrl(), [
+        $this->setClient(new Client($this->getBaseUri(), [
             'request.options' => [
                 'exceptions' => false,
                 'stream' => false

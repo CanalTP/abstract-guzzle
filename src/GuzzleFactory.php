@@ -7,22 +7,25 @@ use CanalTP\AbstractGuzzle\Exception\UnsupportedException;
 class GuzzleFactory
 {
     /**
-     * @param string $baseUrl
+     * @param array $config
      *
      * @return Guzzle
      *
      * @throws NotSupportedException when Guzzle vendor version is not supported.
      */
-    public static function createGuzzle($baseUrl)
+    public static function createGuzzle($config)
     {
         $guzzleVersion = self::detectGuzzleVersion();
 
         switch ($guzzleVersion) {
+            case 6:
+                return new Version\Guzzle6($config);
+                
             case 5:
-                return new Version\Guzzle5($baseUrl);
+                return new Version\Guzzle5($config);
 
             case 3:
-                return new Version\Guzzle3($baseUrl);
+                return new Version\Guzzle3($config);
         }
     }
 
@@ -33,30 +36,24 @@ class GuzzleFactory
      */
     public static function detectGuzzleVersion()
     {
-        if (self::supportsGuzzle5()) {
-            return 5;
+        // this namespace only exist since version 5.x+
+        if (class_exists('GuzzleHttp\\Client')) {
+
+            // default request options are defined differently in version 5 and 6
+            $clientReflexion = new \ReflectionClass('GuzzleHttp\\Client');
+            if ($clientReflexion->hasProperty('config')) {
+                return 6;
+            }
+
+            if ($clientReflexion->hasProperty('defaults')) {
+                return 5;
+            }
         }
 
-        if (self::supportsGuzzle3()) {
+        if (class_exists('Guzzle\\Service\\Client')) {
             return 3;
         }
 
         throw new UnsupportedException();
-    }
-
-    /**
-     * @return bool
-     */
-    private static function supportsGuzzle5()
-    {
-        return class_exists('GuzzleHttp\\Client');
-    }
-
-    /**
-     * @return bool
-     */
-    private static function supportsGuzzle3()
-    {
-        return class_exists('Guzzle\\Service\\Client');
     }
 }

@@ -24,7 +24,7 @@ Install via composer:
 ```
 
 
-## Usage
+## Usage for version 3 and 5
 
 ``` php
 use GuzzleHttp\Psr7\Request;
@@ -44,10 +44,28 @@ $result = $response->getBody();
 ```
 
 
+## Usage for version 3 and 5
+
+``` php
+use GuzzleHttp\Psr7\Request;
+use CanalTP\AbstractGuzzle\GuzzleFactory;
+
+// Instanciate an abstract Guzzle client
+$guzzle = GuzzleFactory::createGuzzle($config);
+
+// Send your request
+$response = $guzzle->get('my/path');
+
+// Get content of your PSR-7 Response
+$result = $response->getBody();
+
+```
+
 ### Supported Guzzle versions
 
- - Guzzle 5
  - Guzzle 3
+ - Guzzle 5
+ - Guzzle 6
 
 
 ## Testing
