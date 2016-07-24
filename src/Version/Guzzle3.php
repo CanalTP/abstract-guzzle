@@ -17,9 +17,9 @@ class Guzzle3 extends Guzzle
     /**
      * {@InheritDoc}
      */
-    public function __construct($baseUrl)
+    public function __construct($baseUri)
     {
-        parent::__construct(['base_uri' => $baseUrl]);
+        parent::__construct($baseUri);
 
         $this->initClient();
     }

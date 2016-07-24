@@ -18,9 +18,9 @@ class Guzzle5 extends Guzzle
     /**
      * {@InheritDoc}
      */
-    public function __construct($baseUrl)
+    public function __construct($baseUri)
     {
-        parent::__construct(['base_uri' => $baseUrl]);
+        parent::__construct($baseUri);
 
         $this->initClient();
     }
@@ -32,6 +32,7 @@ class Guzzle5 extends Guzzle
     {
         $client = new Client(array(
             'base_url' => $this->getBaseUri(),
+            'stream' => false,
             'http_errors' => false,
         ));
 

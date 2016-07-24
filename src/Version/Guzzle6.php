@@ -14,50 +14,25 @@ class Guzzle6 extends Guzzle
     private $client;
 
     /**
-     * @var defaultConfig
-     */
-    private $config;
-
-    /**
      * {@InheritDoc}
      */
-    /**
-     * Guzzle6 accept an array of constructor parameters.
-     *
-     * Here's an example of creating a client using a base_uri and an array of
-     * default request options to apply to each request:
-     *
-     *     $client = new Client([
-     *         'base_uri'        => 'http://www.foo.com/1.0/',
-     *         'timeout'         => 0,
-     *         'allow_redirects' => false,
-     *         'proxy'           => '192.168.16.1:10',
-     *         'auth' => ['user', 'password']
-     *     ]);
-     * @param array $config
-     */
-    public function __construct($config)
+    public function __construct($baseUri)
     {
-        parent::__construct($config);
+        parent::__construct($baseUri);
 
-        $this->config = $config;
-        $this->setClient(new Client($config));
+        $this->initClient();
     }
 
     /**
-     * @return defaultConfig
+     * Init Guzzle6 client with base url.
      */
-    public function getConfig()
+    public function initClient()
     {
-        return $this->config;
-    }
+        $client = new Client(array(
+            'base_uri' => $this->getBaseUri(),
+        ));
 
-    /**
-     * @param defaultConfig $config
-     */
-    public function setConfig($config)
-    {
-        $this->config = $config;
+        $this->setClient($client);
     }
 
     /**
@@ -81,29 +56,10 @@ class Guzzle6 extends Guzzle
     }
 
     /**
-     * @param Request $request
-     * @return mixed|\Psr\Http\Message\ResponseInterface
+     * {@InheritDoc}
      */
     public function send(Request $request)
     {
         return $this->client->send($request);
-    }
-
-    /**
-     * allow to use client's magic method
-     *
-     * @param $method
-     * @param $args
-     */
-    public function __call($method, $args)
-    {
-        if (count($args) < 1) {
-            throw new \InvalidArgumentException('Magic request methods require a URI and optional options array');
-        }
-
-        $uri = $args[0];
-        $opts = isset($args[1]) ? $args[1] : [];
-
-        return $this->client->$method($uri, $opts);
     }
 }
