@@ -30,8 +30,10 @@ Install via composer:
 use GuzzleHttp\Psr7\Request;
 use CanalTP\AbstractGuzzle\GuzzleFactory;
 
+$baseUri = 'http://api.my-app.com/v1/';
+
 // Instanciate an abstract Guzzle client
-$guzzle = GuzzleFactory::createGuzzle($baseUrl);
+$guzzle = GuzzleFactory::createGuzzle($baseUri);
 
 // Create a PSR-7 Request
 $request = new Request('PATCH', 'users/4', ['Content-Type' => 'application/json'], '{"username":"new_username"}');
@@ -43,11 +45,26 @@ $response = $guzzle->send($request);
 $result = $response->getBody();
 ```
 
+Or use shortcut methods:
+
+``` php
+use CanalTP\AbstractGuzzle\GuzzleFactory;
+
+$baseUri = 'http://api.my-app.com/v1/';
+
+// Instanciate an abstract Guzzle client
+$guzzle = GuzzleFactory::createGuzzle($baseUri);
+
+$response = $guzzle->patch('users/4', ['Content-Type' => 'application/json'], '{"username":"new_username"}');
+$result = $response->getBody();
+```
+
 
 ### Supported Guzzle versions
 
- - Guzzle 5
  - Guzzle 3
+ - Guzzle 5
+ - Guzzle 6
 
 
 ## Testing

@@ -3,12 +3,10 @@
 namespace CanalTP\AbstractGuzzle\Version;
 
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Stream\Stream;
 use GuzzleHttp\Client;
 use CanalTP\AbstractGuzzle\Guzzle;
 
-class Guzzle5 extends Guzzle
+class Guzzle6 extends Guzzle
 {
     /**
      * @var Client
@@ -26,17 +24,13 @@ class Guzzle5 extends Guzzle
     }
 
     /**
-     * Init Guzzle5 client with base url.
+     * Init Guzzle6 client with base url.
      */
     public function initClient()
     {
         $client = new Client(array(
-            'base_url' => $this->getBaseUri(),
-            'stream' => false,
-            'http_errors' => false,
+            'base_uri' => $this->getBaseUri(),
         ));
-
-        $client->setDefaultOption('exceptions', false);
 
         $this->setClient($client);
     }
@@ -66,24 +60,6 @@ class Guzzle5 extends Guzzle
      */
     public function send(Request $request)
     {
-        $guzzleRequest = $this->client->createRequest(
-            $request->getMethod(),
-            $request->getUri(),
-            [
-                'headers' => $request->getHeaders(),
-            ]
-        );
-
-        $guzzleRequest->setBody(Stream::factory($request->getBody()));
-
-        $guzzleResponse = $this->getClient()->send($guzzleRequest);
-
-        $response = new Response(
-            $guzzleResponse->getStatusCode(),
-            $guzzleResponse->getHeaders(),
-            $guzzleResponse->getBody(true)
-        );
-
-        return $response;
+        return $this->client->send($request);
     }
 }

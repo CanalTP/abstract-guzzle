@@ -8,10 +8,10 @@ class GuzzleFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateGuzzleReturnsInitializedInstanceOfAbstractGuzzle()
     {
-        $baseUrl = 'http://my-base-url.tld';
-        $guzzle = GuzzleFactory::createGuzzle($baseUrl);
+        $baseUri = 'http://my-base-url.tld';
+        $guzzle = GuzzleFactory::createGuzzle($baseUri);
 
         $this->assertInstanceOf('CanalTP\\AbstractGuzzle\\Guzzle', $guzzle);
-        $this->assertEquals($baseUrl, $guzzle->getBaseUrl());
+        $this->assertEquals($baseUri, $guzzle->getBaseUri());
     }
 }

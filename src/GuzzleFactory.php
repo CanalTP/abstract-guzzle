@@ -7,22 +7,25 @@ use CanalTP\AbstractGuzzle\Exception\UnsupportedException;
 class GuzzleFactory
 {
     /**
-     * @param string $baseUrl
+     * @param string $baseUri
      *
      * @return Guzzle
      *
      * @throws NotSupportedException when Guzzle vendor version is not supported.
      */
-    public static function createGuzzle($baseUrl)
+    public static function createGuzzle($baseUri)
     {
         $guzzleVersion = self::detectGuzzleVersion();
 
         switch ($guzzleVersion) {
+            case 6:
+                return new Version\Guzzle6($baseUri);
+
             case 5:
-                return new Version\Guzzle5($baseUrl);
+                return new Version\Guzzle5($baseUri);
 
             case 3:
-                return new Version\Guzzle3($baseUrl);
+                return new Version\Guzzle3($baseUri);
         }
     }
 
@@ -33,6 +36,10 @@ class GuzzleFactory
      */
     public static function detectGuzzleVersion()
     {
+        if (self::supportsGuzzle6()) {
+            return 6;
+        }
+
         if (self::supportsGuzzle5()) {
             return 5;
         }
@@ -47,9 +54,17 @@ class GuzzleFactory
     /**
      * @return bool
      */
+    private static function supportsGuzzle6()
+    {
+        return class_exists('GuzzleHttp\\Client') && !trait_exists('GuzzleHttp\\HasDataTrait');
+    }
+
+    /**
+     * @return bool
+     */
     private static function supportsGuzzle5()
     {
-        return class_exists('GuzzleHttp\\Client');
+        return class_exists('GuzzleHttp\\Client') && trait_exists('GuzzleHttp\\HasDataTrait');
     }
 
     /**
