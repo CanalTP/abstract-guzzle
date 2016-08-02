@@ -2,6 +2,7 @@ Abstract Guzzle
 ===============
 
 [![Build Status](https://travis-ci.org/CanalTP/abstract-guzzle.svg?branch=master)](https://travis-ci.org/CanalTP/abstract-guzzle)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/CanalTP/abstract-guzzle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/CanalTP/abstract-guzzle/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/canaltp/abstract-guzzle/v/stable)](https://packagist.org/packages/canaltp/abstract-guzzle)
 [![License](https://poser.pugx.org/canaltp/abstract-guzzle/license)](https://packagist.org/packages/canaltp/abstract-guzzle)
 

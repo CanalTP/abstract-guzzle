@@ -3,7 +3,6 @@
 namespace Tests\CanalTP\AbstractGuzzle;
 
 use CanalTP\AbstractGuzzle\GuzzleFactory;
-use \Mockery as m;
 
 class Guzzle5Test extends \PHPUnit_Framework_TestCase
 {
