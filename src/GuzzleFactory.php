@@ -13,13 +13,13 @@ class GuzzleFactory
      *
      * @throws NotSupportedException when Guzzle vendor version is not supported.
      */
-    public static function createGuzzle($baseUri)
+    public static function createGuzzle($baseUri, $options = [])
     {
         $guzzleVersion = self::detectGuzzleVersion();
 
         switch ($guzzleVersion) {
             case 6:
-                return new Version\Guzzle6($baseUri);
+                return new Version\Guzzle6($baseUri, $options);
 
             case 5:
                 return new Version\Guzzle5($baseUri);

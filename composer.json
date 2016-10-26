@@ -11,7 +11,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": ">=4.3",
-        "squizlabs/php_codesniffer": "2.x"
+        "squizlabs/php_codesniffer": "2.x",
+        "guzzlehttp/guzzle": "~3.0"
     },
     "autoload": {
         "psr-4": {
@@ -20,7 +21,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\CanalTP\\AbstractGuzzle\\": "tests/"
+            "CanalTP\\AbstractGuzzle\\Tests\\": "test/"
         }
     }
 }

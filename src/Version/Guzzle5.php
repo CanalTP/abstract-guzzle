@@ -69,9 +69,7 @@ class Guzzle5 extends Guzzle
         $guzzleRequest = $this->client->createRequest(
             $request->getMethod(),
             $request->getUri(),
-            [
-                'headers' => $request->getHeaders(),
-            ]
+            ['headers' => $request->getHeaders()]
         );
 
         $guzzleRequest->setBody(Stream::factory($request->getBody()));
@@ -85,5 +83,15 @@ class Guzzle5 extends Guzzle
         );
 
         return $response;
+    }
+
+    /**
+     * Used to mock client
+     *
+     * @return \GuzzleHttp\Event\Emitter|\GuzzleHttp\Event\EmitterInterface
+     */
+    public function getEmitter()
+    {
+        return $this->client->getEmitter();
     }
 }
