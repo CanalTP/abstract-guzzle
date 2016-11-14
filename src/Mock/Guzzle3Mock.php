@@ -3,7 +3,9 @@
 namespace CanalTP\AbstractGuzzle\Mock;
 
 use CanalTP\AbstractGuzzle\GuzzleFactory;
+use Guzzle\Http\Message\Response;
 use Guzzle\Plugin\Mock\MockPlugin;
+use GuzzleHttp\Psr7\Response as Psr7Response;
 
 class Guzzle3Mock
 {
@@ -15,10 +17,13 @@ class Guzzle3Mock
     {
         $plugin = new MockPlugin();
         foreach ($responseCollection as $response) {
+            if ($response instanceof Psr7Response) {
+                $response = new Response($response->getStatusCode(), $response->getHeaders(), $response->getBody());
+            }
             $plugin->addResponse($response);
         }
 
-        $client = GuzzleFactory::createGuzzle('');
+        $client = GuzzleFactory::createClient('');
         $client->addSubscriber($plugin);
 
         return $client;

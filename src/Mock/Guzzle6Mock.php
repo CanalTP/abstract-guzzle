@@ -21,6 +21,6 @@ class Guzzle6Mock
         $mock = new MockHandler($responseCollection);
         $handler = HandlerStack::create($mock);
 
-        return GuzzleFactory::createGuzzle('', ['handler' => $handler]);
+        return GuzzleFactory::createClient('', ['handler' => $handler]);
     }
 }

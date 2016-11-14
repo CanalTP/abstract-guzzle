@@ -3,6 +3,7 @@
 namespace CanalTP\AbstractGuzzle;
 
 use CanalTP\AbstractGuzzle\Exception\UnsupportedException;
+use GuzzleHttp\Psr7\Response;
 
 class GuzzleFactory
 {
@@ -13,7 +14,7 @@ class GuzzleFactory
      *
      * @throws NotSupportedException when Guzzle vendor version is not supported.
      */
-    public static function createGuzzle($baseUri, $options = [])
+    public static function createClient($baseUri, $options = [])
     {
         $guzzleVersion = self::detectGuzzleVersion();
 
@@ -26,6 +27,35 @@ class GuzzleFactory
 
             case 3:
                 return new Version\Guzzle3($baseUri);
+        }
+    }
+
+    /**
+     * get a mock of right client
+     *
+     * @param Response[] $mockedResponseCollection
+     * @return Guzzle
+     * @throws \Exception
+     */
+    public static function createClientMock(array $mockedResponseCollection)
+    {
+        $guzzleVersion = self::detectGuzzleVersion();
+
+        switch ($guzzleVersion) {
+            case 6:
+                $mock = new Mock\Guzzle6Mock();
+                return $mock->getMock($mockedResponseCollection);
+
+            case 5:
+                $mock = new Mock\Guzzle5Mock();
+                return $mock->getMock($mockedResponseCollection);
+
+            case 3:
+                $mock = new Mock\Guzzle3Mock();
+                return $mock->getMock($mockedResponseCollection);
+
+            default:
+                throw new \Exception('no guzzle version match');
         }
     }
 
