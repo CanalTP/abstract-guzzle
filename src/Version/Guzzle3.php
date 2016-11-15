@@ -6,6 +6,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Guzzle\Http\Client;
 use CanalTP\AbstractGuzzle\Guzzle;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class Guzzle3 extends Guzzle
 {
@@ -78,5 +79,15 @@ class Guzzle3 extends Guzzle
         );
 
         return $response;
+    }
+
+    /**
+     * use to mock client
+     *
+     * @param EventSubscriberInterface $subscriber
+     */
+    public function addSubscriber(EventSubscriberInterface $subscriber)
+    {
+        $this->client->addSubscriber($subscriber);
     }
 }

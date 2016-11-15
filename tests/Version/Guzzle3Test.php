@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\CanalTP\AbstractGuzzle;
+namespace CanalTP\AbstractGuzzle\tests\Version;
 
 use CanalTP\AbstractGuzzle\GuzzleFactory;
 
@@ -13,12 +13,18 @@ class Guzzle3Test extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testCreateGuzzleReturnsInitializedInstanceOfAbstractGuzzle()
+    public function testCreateGuzzleReturnsInitializedSpecificInstanceOfAbstractGuzzle()
     {
-        $baseUri = 'http://my-base-url.tld';
-        $guzzle = GuzzleFactory::createGuzzle($baseUri);
+        $baseUri = 'http://my-base-url-for3.tld';
+        $guzzle = GuzzleFactory::createClient($baseUri);
 
         $this->assertInstanceOf('CanalTP\\AbstractGuzzle\\Version\\Guzzle3', $guzzle);
         $this->assertEquals($baseUri, $guzzle->getBaseUri());
+    }
+    
+    public function testClientMockForVersion3()
+    {
+        $clientMock = GuzzleFactory::createClientMock([]);
+        $this->assertInstanceOf('CanalTP\\AbstractGuzzle\\Version\\Guzzle3', $clientMock);
     }
 }

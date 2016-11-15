@@ -20,7 +20,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\CanalTP\\AbstractGuzzle\\": "tests/"
+            "CanalTP\\AbstractGuzzle\\Tests\\": "test/"
         }
     }
 }

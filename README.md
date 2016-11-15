@@ -60,6 +60,29 @@ $response = $guzzle->patch('users/4', ['Content-Type' => 'application/json'], '{
 $result = $response->getBody();
 ```
 
+## Mocking guzzle client
+
+``` php
+use CanalTP\AbstractGuzzle\GuzzleFactory;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
+
+// use factory to easily create client mock and add the response you expect
+$clientMock = GuzzleFactory::createClientMock([
+    new Response(200, ['content-type' => 'application/json', 'content-length' => 26, 'canaltp' => 42]),
+    new Response(200, [], '{"lines":"expected-lines"}'),
+    new Response(404, ['Content-Length' => 0])
+]);
+
+// here some examples of assert
+$firstCall = $clientMock->send(new Request('get', 'github'));
+$firstCallHeaders = $firstCall->getHeaders();
+$this->assertInstanceOf('GuzzleHttp\\Psr7\\Response', $firstCall);
+$this->assertEquals(200, $firstCall->getStatusCode());
+$this->assertEquals(42, $firstCallHeaders['canaltp'][0]);
+$this->assertEquals('application/json', $firstCallHeaders['content-type'][0]);
+
+```
 
 ### Supported Guzzle versions
 
