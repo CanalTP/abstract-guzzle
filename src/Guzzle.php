@@ -4,41 +4,42 @@ namespace CanalTP\AbstractGuzzle;
 
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Client;
 
+/**
+ * Class Guzzle
+ * @package CanalTP\AbstractGuzzle
+ *
+ * @method Client getClient()
+ * @method Guzzle setClient(Client $client)
+ */
 abstract class Guzzle
 {
-    /**
-     * @var string
-     */
-    private $baseUri;
+    protected $defaultOptions;
 
     /**
-     * @param string $baseUri
+     * Init Guzzle client with base url.
+     *
+     * @param $baseUri
+     * @param array $option
      */
-    public function __construct($baseUri)
-    {
-        $this->baseUri = $baseUri;
-    }
+    abstract public function __construct($baseUri, $option = []);
 
     /**
      * @return string
      */
-    public function getBaseUri()
-    {
-        return $this->baseUri;
-    }
+    abstract public function getBaseUri();
 
     /**
      * @param string $baseUri
      *
      * @return self
      */
-    public function setBaseUri($baseUri)
-    {
-        $this->baseUri = $baseUri;
+    abstract public function setBaseUri($baseUri);
 
-        return $this;
-    }
+    abstract public function setDefaultOptions($options = []);
+
+    abstract public function getDefaultOptions();
 
     /**
      * @param Request $request
@@ -59,9 +60,7 @@ abstract class Guzzle
     {
         $request = new Request($method, $uri, $headers, $body);
 
-        $response = $this->send($request);
-
-        return $response;
+        return $this->send($request);
     }
 
     /**
