@@ -30,11 +30,6 @@ class Guzzle5 extends Guzzle
         $this->client = new Client($this->defaultOptions);
     }
 
-    public function getBaseUri()
-    {
-        return $this->client->getBaseUrl();
-    }
-
     /**
      * We have to recreate client to modify baseUri
      *
@@ -43,6 +38,11 @@ class Guzzle5 extends Guzzle
     public function setBaseUri($baseUri)
     {
         $this->setDefaultOptions(array_merge($this->defaultOptions, ['base_url' => $baseUri]));
+    }
+
+    public function getBaseUri()
+    {
+        return $this->client->getBaseUrl();
     }
 
     public function setDefaultOptions($options = [])
