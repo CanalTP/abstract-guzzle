@@ -18,24 +18,40 @@ class Guzzle3 extends Guzzle
     /**
      * {@InheritDoc}
      */
-    public function __construct($baseUri)
+    public function __construct($baseUri, $options = [])
     {
-        parent::__construct($baseUri);
+        $this->setConfig($options);
 
-        $this->initClient();
+        $this->client = new Client($baseUri, $this->defaultOptions);
     }
 
-    /**
-     * Init Guzzle3 client with base url.
-     */
-    public function initClient()
+    private function setConfig($options = [])
     {
-        $this->setClient(new Client($this->getBaseUri(), [
+        $this->defaultOptions = array_merge([
             'request.options' => [
-                'exceptions' => false,
-                'stream' => false
+                'exceptions' => false
             ]
-        ]));
+        ], $options);
+    }
+
+    public function setBaseUri($baseUri)
+    {
+        $this->client->setBaseUrl($baseUri);
+    }
+
+    public function getBaseUri()
+    {
+        return $this->client->getBaseUrl();
+    }
+
+    public function setDefaultOptions($options = [])
+    {
+        $this->setConfig($options);
+    }
+
+    public function getDefaultOptions()
+    {
+        return $this->client->getConfig();
     }
 
     /**

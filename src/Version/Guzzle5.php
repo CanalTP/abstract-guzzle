@@ -18,27 +18,41 @@ class Guzzle5 extends Guzzle
     /**
      * {@InheritDoc}
      */
-    public function __construct($baseUri)
+    public function __construct($baseUri, $options = [])
     {
-        parent::__construct($baseUri);
+        $this->defaultOptions = array_merge([
+            'base_url' => $baseUri,
+            'defaults' => [
+                'exceptions' => false,
+            ]
+        ], $options);
 
-        $this->initClient();
+        $this->client = new Client($this->defaultOptions);
     }
 
     /**
-     * Init Guzzle5 client with base url.
+     * We have to recreate client to modify baseUri
+     *
+     * @param string $baseUri
      */
-    public function initClient()
+    public function setBaseUri($baseUri)
     {
-        $client = new Client(array(
-            'base_url' => $this->getBaseUri(),
-            'stream' => false,
-            'http_errors' => false,
-        ));
+        $this->setDefaultOptions(array_merge($this->defaultOptions, ['base_url' => $baseUri]));
+    }
 
-        $client->setDefaultOption('exceptions', false);
+    public function getBaseUri()
+    {
+        return $this->client->getBaseUrl();
+    }
 
-        $this->setClient($client);
+    public function setDefaultOptions($options = [])
+    {
+        $this->__construct($this->getBaseUri(), $options);
+    }
+
+    public function getDefaultOptions()
+    {
+        return $this->client->getDefaultOption();
     }
 
     /**

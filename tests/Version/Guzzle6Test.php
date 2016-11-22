@@ -22,6 +22,22 @@ class Guzzle6Test extends \PHPUnit_Framework_TestCase
         $this->assertEquals($baseUri, $guzzle->getBaseUri());
     }
 
+    public function testGetBaseUri()
+    {
+        $guzzle = GuzzleFactory::createClient('http://fakebaseuri.com');
+
+        $this->assertEquals($guzzle->getClient()->getConfig()['base_uri'], $guzzle->getBaseUri());
+    }
+
+    public function testSetBaseUri()
+    {
+        $guzzle = GuzzleFactory::createClient('http://fail-base-uri.no');
+        $goodUri = 'http://realbaseuri.yes';
+        $guzzle->setBaseUri($goodUri);
+
+        $this->assertEquals($goodUri, $guzzle->getBaseUri());
+    }
+
     public function testClientMockForVersion6()
     {
         $clientMock = GuzzleFactory::createClientMock([]);

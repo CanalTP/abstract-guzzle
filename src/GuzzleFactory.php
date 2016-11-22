@@ -9,10 +9,8 @@ class GuzzleFactory
 {
     /**
      * @param string $baseUri
-     *
-     * @return Guzzle
-     *
-     * @throws NotSupportedException when Guzzle vendor version is not supported.
+     * @param array $options
+     * @return Version\Guzzle3|Version\Guzzle5|Version\Guzzle6
      */
     public static function createClient($baseUri, $options = [])
     {
@@ -23,10 +21,10 @@ class GuzzleFactory
                 return new Version\Guzzle6($baseUri, $options);
 
             case 5:
-                return new Version\Guzzle5($baseUri);
+                return new Version\Guzzle5($baseUri, $options);
 
             case 3:
-                return new Version\Guzzle3($baseUri);
+                return new Version\Guzzle3($baseUri, $options);
         }
     }
 
@@ -35,7 +33,6 @@ class GuzzleFactory
      *
      * @param Response[] $mockedResponseCollection
      * @return Guzzle
-     * @throws \Exception
      */
     public static function createClientMock(array $mockedResponseCollection)
     {
@@ -53,9 +50,6 @@ class GuzzleFactory
             case 3:
                 $mock = new Mock\Guzzle3Mock();
                 return $mock->getMock($mockedResponseCollection);
-
-            default:
-                throw new \Exception('no guzzle version match');
         }
     }
 
