@@ -20,22 +20,38 @@ class Guzzle3 extends Guzzle
      */
     public function __construct($baseUri, $options = [])
     {
-        $this->setClient(new Client($baseUri, [
-            'request.options' => [
-                'exceptions' => false,
-                'stream' => false
-            ]
-        ]));
+        $this->setConfig($options);
+
+        $this->client = new Client($baseUri, $this->defaultOptions);
     }
 
-    public function getBaseUri()
+    private function setConfig($options = [])
     {
-        // TODO: Implement getBaseUri() method.
+        $this->defaultOptions = array_merge([
+            'request.options' => [
+                'exceptions' => false
+            ]
+        ], $options);
     }
 
     public function setBaseUri($baseUri)
     {
-        // TODO: Implement setBaseUri() method.
+        $this->client->setBaseUrl($baseUri);
+    }
+
+    public function getBaseUri()
+    {
+        return $this->client->getBaseUrl();
+    }
+
+    public function setDefaultOptions($options = [])
+    {
+        $this->setConfig($options);
+    }
+
+    public function getDefaultOptions()
+    {
+        return $this->client->getConfig();
     }
 
     /**
