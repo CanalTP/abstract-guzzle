@@ -20,6 +20,12 @@ class GuzzleFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($baseUri, $guzzle->getBaseUri());
     }
 
+//    public function testSetDefaultAuth()
+//    {
+//        $client = GuzzleFactory::createClient('https://api.navitia.io/v1/coverage/sandbox/');
+//        $client->setDefaultAuth('3b036afe-0110-4202-b9ed-99718476c2e0', null);
+//    }
+
     public function testGetMock()
     {
         $clientMock = GuzzleFactory::createClientMock([

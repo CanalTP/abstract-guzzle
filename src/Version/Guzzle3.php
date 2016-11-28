@@ -20,18 +20,11 @@ class Guzzle3 extends Guzzle
      */
     public function __construct($baseUri, $options = [])
     {
-        $this->setConfig($options);
+        $this->defaultOptions['request.options'] = array_merge(
+            ['exceptions' => false]
+            , $options);
 
         $this->client = new Client($baseUri, $this->defaultOptions);
-    }
-
-    private function setConfig($options = [])
-    {
-        $this->defaultOptions = array_merge([
-            'request.options' => [
-                'exceptions' => false
-            ]
-        ], $options);
     }
 
     public function setBaseUri($baseUri)
@@ -52,6 +45,14 @@ class Guzzle3 extends Guzzle
     public function getDefaultOptions()
     {
         return $this->client->getConfig();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setDefaultAuth($username, $password, $type = 'Basic')
+    {
+        $this->client->setDefaultOption('auth', [$username, $password, $type]);
     }
 
     /**

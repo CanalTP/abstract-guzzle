@@ -42,6 +42,16 @@ abstract class Guzzle
     abstract public function getDefaultOptions();
 
     /**
+     * This is a shortcut to set auth headers and allow you to be client version proof
+     *
+     * @param string $username
+     * @param string $password
+     * @param string $type
+     * @return mixed
+     */
+    abstract public function setDefaultAuth($username, $password, $type);
+
+    /**
      * @param Request $request
      *
      * @return Response

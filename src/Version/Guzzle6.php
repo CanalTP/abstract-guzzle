@@ -46,6 +46,17 @@ class Guzzle6 extends Guzzle
         return $this->client->getConfig();
     }
 
+    public function setDefaultAuth($username, $password, $type = 'basic')
+    {
+        $auth = [$username, $password];
+        if ($type !== 'basic') {
+            $auth[] = $type;
+        }
+
+        $this->setDefaultAuth('auth', $auth);
+    }
+
+
     /**
      * @return Client
      */
