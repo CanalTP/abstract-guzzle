@@ -20,12 +20,13 @@ class Guzzle5 extends Guzzle
      */
     public function __construct($baseUri, $options = [])
     {
-        $this->defaultOptions = array_merge([
+        $this->defaultOptions = [
             'base_url' => $baseUri,
-            'defaults' => [
-                'exceptions' => false,
-            ]
-        ], $options);
+            'defaults' => array_merge(
+                ['exceptions' => false],
+                $options
+            )
+        ];
 
         $this->client = new Client($this->defaultOptions);
     }
@@ -37,7 +38,7 @@ class Guzzle5 extends Guzzle
      */
     public function setBaseUri($baseUri)
     {
-        $this->setDefaultOptions(array_merge($this->defaultOptions, ['base_url' => $baseUri]));
+        $this->__construct($baseUri, []);
     }
 
     public function getBaseUri()
@@ -57,12 +58,7 @@ class Guzzle5 extends Guzzle
 
     public function setDefaultAuth($username, $password, $type = 'basic')
     {
-        $auth = [$username, $password];
-        if ($type !== 'basic') {
-            $auth[] = $type;
-        }
-
-        $this->setDefaultAuth('auth', $auth);
+        $this->client->setDefaultOption('auth', [$username, $password, $type]);
     }
 
     /**

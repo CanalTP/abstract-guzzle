@@ -9,7 +9,7 @@ use GuzzleHttp\Exception\ClientException;
 
 class GuzzleFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    
+    private $sandboxToken = '3b036afe-0110-4202-b9ed-99718476c2e0';
 
     public function testCreateGuzzleReturnsInitializedInstanceOfAbstractGuzzle()
     {
@@ -20,11 +20,20 @@ class GuzzleFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($baseUri, $guzzle->getBaseUri());
     }
 
-//    public function testSetDefaultAuth()
-//    {
-//        $client = GuzzleFactory::createClient('https://api.navitia.io/v1/coverage/sandbox/');
-//        $client->setDefaultAuth('3b036afe-0110-4202-b9ed-99718476c2e0', null);
-//    }
+    public function testAddAuthOptionAtConstruct()
+    {
+        $client = GuzzleFactory::createClient('https://api.navitia.io/v1/coverage/sandbox/', ['auth' => [$this->sandboxToken, null, 'basic']]);
+
+        $this->assertEquals([$this->sandboxToken, null, 'basic'], $client->getDefaultOptions()['auth']);
+    }
+
+    public function testAddAuthOptionAfterInit()
+    {
+        $client = GuzzleFactory::createClient('https://api.navitia.io/v1/coverage/sandbox/');
+        $client->setDefaultAuth($this->sandboxToken, null);
+
+        $this->assertEquals([$this->sandboxToken, null, 'basic'], $client->getDefaultOptions()['auth']);
+    }
 
     public function testGetMock()
     {
