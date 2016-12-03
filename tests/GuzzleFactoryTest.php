@@ -9,7 +9,7 @@ use GuzzleHttp\Exception\ClientException;
 
 class GuzzleFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    
+    private $sandboxToken = '3b036afe-0110-4202-b9ed-99718476c2e0';
 
     public function testCreateGuzzleReturnsInitializedInstanceOfAbstractGuzzle()
     {
@@ -18,6 +18,21 @@ class GuzzleFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('CanalTP\\AbstractGuzzle\\Guzzle', $guzzle);
         $this->assertEquals($baseUri, $guzzle->getBaseUri());
+    }
+
+    public function testAddAuthOptionAtConstruct()
+    {
+        $client = GuzzleFactory::createClient('https://api.navitia.io/v1/coverage/sandbox/', ['auth' => [$this->sandboxToken, null, 'basic']]);
+
+        $this->assertEquals([$this->sandboxToken, null, 'basic'], $client->getDefaultOptions()['auth']);
+    }
+
+    public function testAddAuthOptionAfterInit()
+    {
+        $client = GuzzleFactory::createClient('https://api.navitia.io/v1/coverage/sandbox/');
+        $client->setDefaultAuth($this->sandboxToken, null);
+
+        $this->assertEquals([$this->sandboxToken, null, 'basic'], $client->getDefaultOptions()['auth']);
     }
 
     public function testGetMock()

@@ -33,7 +33,7 @@ class Guzzle6 extends Guzzle
 
     public function getBaseUri()
     {
-        return $this->client->getConfig('base_uri');
+        return (string) $this->client->getConfig('base_uri');
     }
 
     public function setDefaultOptions($options = [])
@@ -44,6 +44,11 @@ class Guzzle6 extends Guzzle
     public function getDefaultOptions()
     {
         return $this->client->getConfig();
+    }
+
+    public function setDefaultAuth($username, $password, $type = 'basic')
+    {
+        $this->setDefaultOptions(['auth' => [$username, $password, $type]]);
     }
 
     /**
