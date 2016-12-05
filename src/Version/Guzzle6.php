@@ -18,10 +18,7 @@ class Guzzle6 extends Guzzle
      */
     public function __construct($baseUri, $options = [])
     {
-        $this->defaultOptions = array_merge([
-            'base_uri' => $baseUri,
-            'http_errors' => false
-        ], $options);
+        $this->defaultOptions = array_merge(['base_uri' => $baseUri], $options);
 
         $this->client = new Client($this->defaultOptions);
     }

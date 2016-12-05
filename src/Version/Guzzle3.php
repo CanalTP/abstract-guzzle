@@ -20,10 +20,7 @@ class Guzzle3 extends Guzzle
      */
     public function __construct($baseUri, $options = [])
     {
-        $this->defaultOptions['request.options'] = array_merge(
-            ['exceptions' => false],
-            $options
-        );
+        $this->defaultOptions['request.options'] = $options;
 
         $this->client = new Client($baseUri, $this->defaultOptions);
     }

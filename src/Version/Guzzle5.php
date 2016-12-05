@@ -22,10 +22,7 @@ class Guzzle5 extends Guzzle
     {
         $this->defaultOptions = [
             'base_url' => $baseUri,
-            'defaults' => array_merge(
-                ['exceptions' => false],
-                $options
-            )
+            'defaults' => $options
         ];
 
         $this->client = new Client($this->defaultOptions);
