@@ -5,7 +5,6 @@ namespace CanalTP\AbstractGuzzle\Tests;
 use CanalTP\AbstractGuzzle\GuzzleFactory;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Exception\ClientException;
 
 class GuzzleFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -35,6 +34,21 @@ class GuzzleFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([$this->sandboxToken, null, 'basic'], $client->getDefaultOptions()['auth']);
     }
 
+    public function testFailCallThrowError()
+    {
+        $clientMock = GuzzleFactory::createClientMock([
+            new Response(404, [], "nok")
+        ]);
+
+        try
+        {
+            $clientMock->get('fail');
+        }
+        catch (\Exception $e) {
+            $this->assertNotNull($e, 'Exception must be throw by default if bad request');
+        }
+    }
+
     public function testGetMock()
     {
         $clientMock = GuzzleFactory::createClientMock([
@@ -54,11 +68,10 @@ class GuzzleFactoryTest extends \PHPUnit_Framework_TestCase
         $secondCall = $clientMock->send(new Request('post', 'packagist'));
         $this->assertEquals('{"lines":"expected-lines"}', $secondCall->getBody()->getContents());
 
-        // since guzzle 6, exception will be throw in case of http errors
         try {
-            $thirdCall = $clientMock->send(new Request('get', 'php/404'));
-            $this->assertEquals(404, $thirdCall->getStatusCode());
-        } catch (ClientException $e) {
+            $clientMock->get('php/404');
+        } catch (\Exception $e) {
+            $this->assertNotNull($e, 'exception catched in case of fail response');
             $this->assertEquals(404, $e->getResponse()->getStatusCode());
         }
     }
